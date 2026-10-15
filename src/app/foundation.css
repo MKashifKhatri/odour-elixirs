@@ -1,0 +1,264 @@
+/* Odour Elixirs — shared design foundation.
+ * Loaded before legacy page styles; brand navigation consumes these tokens directly.
+ * Fluid type interpolates between 375px and 1440px at a 16px root size.
+ * Keep the root font size user-controlled for browser zoom and accessibility.
+ */
+
+:root {
+  /* Palette. Champagne is decorative on white, not small text or a focus ring. */
+  --color-white: #ffffff;
+  --color-soft: #f5f5f7;
+  --color-ink: #1d1d1f;
+  --color-secondary: #6e6e73;
+  --color-black: #000000;
+  --color-champagne: #b08d57;
+
+  /* Semantic colors: components should use these instead of palette values. */
+  --surface: var(--color-white);
+  --surface-subtle: var(--color-soft);
+  --text: var(--color-ink);
+  --text-secondary: var(--color-secondary);
+  /* Avoid --accent, which the existing Radix/Tailwind theme uses as HSL channels. */
+  --accent-color: var(--color-champagne);
+  --action: var(--color-ink);
+  --on-action: var(--color-white);
+  --focus: var(--color-ink);
+  --control-outline: var(--color-secondary);
+  --selection: var(--color-ink);
+  --on-selection: var(--color-white);
+  --nav-surface: rgb(255 255 255 / 80%);
+  --overlay: rgb(0 0 0 / 40%);
+  color-scheme: light;
+
+  /* Typography: only regular, medium, and semibold. */
+  --font-family: -apple-system, "SF Pro Display", "Inter", system-ui, sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --text-hero: clamp(2.75rem, 2.1338rem + 2.6291vw, 4.5rem);
+  --text-h1: clamp(2.25rem, 1.8099rem + 1.8779vw, 3.5rem);
+  --text-h2: clamp(1.75rem, 1.4859rem + 1.1268vw, 2.5rem);
+  --text-h3: clamp(1.375rem, 1.243rem + 0.5634vw, 1.75rem);
+  --text-body: clamp(1rem, 0.978rem + 0.0939vw, 1.0625rem);
+  --text-caption: clamp(0.75rem, 0.728rem + 0.0939vw, 0.8125rem);
+  --text-price: 1.3125rem;
+  --leading-hero: 1.05;
+  --leading-heading: 1.1;
+  --leading-body: 1.5;
+  --tracking-heading: -0.02em;
+  --tracking-body: 0;
+
+  /* Eight-pixel spacing scale. */
+  --space-0: 0;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+  --space-20: 10rem;
+  --section-space: var(--space-8);
+  --section-space-large: var(--space-12);
+  --page-gutter: var(--space-2);
+  --grid-gap: var(--space-2);
+  --stack-gap: var(--space-3);
+
+  /* Layout, shapes, and controls. */
+  --container-max: 80rem;
+  --reading-max: 42.5rem;
+  --form-max: 25rem;
+  --grid-columns: 12;
+  --radius-card: 0.75rem;
+  --radius-button: 61.25rem;
+  --radius-input: 0.5rem;
+  --shadow-card: none;
+  --shadow-overlay: none;
+  --tap-target: 2.75rem;
+  --control-height: 3rem;
+  --icon-size: 1.25rem;
+  --icon-stroke: 1.5;
+  --nav-height: 3rem;
+  --nav-blur: 20px;
+  --stroke-width: 1px;
+  --focus-width: 2px;
+  --focus-offset: 4px;
+
+  /* Animate named properties, never transition: all. */
+  --motion-fast: 250ms;
+  --motion-base: 300ms;
+  --motion-slow: 400ms;
+  --motion-ease: ease-out;
+  --motion-distance: var(--space-2);
+  --disabled-opacity: 0.5;
+  /* Shared navigation/footer component tokens. */
+  --text-menu: 1.75rem;
+  --brand-logo-width: 6.5rem;
+  --badge-size: 1rem;
+  --badge-offset: -0.5rem;
+  --menu-line-shift: 3px;
+  --menu-stagger: 40ms;
+  --layer-header: 50;
+  --layer-dialog: 90;
+  --layer-skip: 100;
+  /* Component states. Status colors are reserved for feedback, never decoration. */
+  --status-success: #246347;
+  --status-success-surface: #edf6f0;
+  --status-error: #a12b29;
+  --status-error-surface: #fff1f0;
+  --status-warning: #795419;
+  --status-warning-surface: #faf3e7;
+  --control-height-floating: var(--space-8);
+  --dialog-max: 36rem;
+  --sheet-max: 30rem;
+  --table-max-height: 28rem;
+  --table-min-width: 36rem;
+  --product-aspect: 4 / 5;
+  --skeleton-opacity: 0.45;
+  --layer-toast: 110;
+}
+
+/* Breakpoints remain literals: CSS variables cannot be used in media queries. */
+@media (min-width: 48rem) {
+  :root {
+    --page-gutter: var(--space-4);
+    --grid-gap: var(--space-3);
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --section-space: var(--space-12);
+    --section-space-large: var(--space-20);
+  }
+}
+
+/* Reset: preserve native semantics, validation, and keyboard interactions. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; min-block-size: 100svh; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+img, picture, video, canvas, svg { display: block; max-inline-size: 100%; }
+img, video { block-size: auto; }
+button, input, textarea, select { font: inherit; letter-spacing: inherit; color: inherit; }
+button, input, textarea, select { min-inline-size: 0; }
+button, select { text-transform: none; }
+button:not(:disabled), summary { cursor: pointer; }
+textarea { resize: vertical; }
+table { border-collapse: collapse; border-spacing: 0; }
+th { text-align: start; }
+[hidden] { display: none !important; }
+
+/* Base text: captions are metadata only; prose and form controls stay >=16px. */
+body {
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+}
+h1, h2, h3, h4, h5, h6, .type-hero {
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3, h4, h5, h6 { font-size: var(--text-h3); }
+.type-hero { font-size: var(--text-hero); line-height: var(--leading-hero); }
+.type-body { font-size: var(--text-body); line-height: var(--leading-body); }
+.type-caption { font-size: var(--text-caption); line-height: var(--leading-body); }
+.type-price { font-size: var(--text-price); font-weight: var(--weight-medium); }
+.text-secondary { color: var(--text-secondary); }
+strong, b { font-weight: var(--weight-semibold); }
+a { color: inherit; text-underline-offset: var(--focus-offset); }
+p { overflow-wrap: break-word; }
+::selection { background: var(--selection); color: var(--on-selection); }
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: var(--focus-offset);
+}
+:disabled { cursor: not-allowed; opacity: var(--disabled-opacity); }
+
+/* Surface variants inherit semantic colors into every nested component. */
+.section-soft { background: var(--surface-subtle); color: var(--text); }
+.section-dark {
+  --surface: var(--color-black);
+  --surface-subtle: var(--color-ink);
+  --text: var(--color-white);
+  --text-secondary: var(--color-soft);
+  --action: var(--color-white);
+  --on-action: var(--color-black);
+  --focus: var(--color-white);
+  --control-outline: var(--color-soft);
+  --selection: var(--color-white);
+  --on-selection: var(--color-black);
+  --status-success: #a5dbb8;
+  --status-success-surface: #163224;
+  --status-error: #ffb4ab;
+  --status-error-surface: #3d1b1a;
+  --status-warning: #ead098;
+  --status-warning-surface: #332a18;
+  color-scheme: dark;
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* A full-width section wraps an inner .container. Max content width is 1280px. */
+.container {
+  inline-size: calc(100% - var(--page-gutter) - var(--page-gutter));
+  max-inline-size: var(--container-max);
+  margin-inline: auto;
+}
+.container-reading { max-inline-size: var(--reading-max); }
+.container-form { max-inline-size: var(--form-max); }
+.section { padding-block: var(--section-space); }
+.section-large { padding-block: var(--section-space-large); }
+.stack { display: flex; flex-direction: column; gap: var(--stack-gap); }
+
+/* Twelve tracks at every size. Children stack by default on small screens.
+ * Example: .grid-12 > .col-6 gives two columns from 768px onward.
+ * Optional --column-span can select any of the twelve tracks.
+ */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+.grid-12 > * { min-inline-size: 0; grid-column: span var(--grid-columns); }
+.col-3 { --column-span: 3; }
+.col-4 { --column-span: 4; }
+.col-6 { --column-span: 6; }
+.col-8 { --column-span: 8; }
+.col-12 { --column-span: 12; }
+@media (min-width: 48rem) {
+  .grid-12 > * { grid-column: span var(--column-span, var(--grid-columns)); }
+}
+
+/* Original outline SVGs use this utility inside an explicitly labelled button. */
+.icon { inline-size: var(--icon-size); block-size: var(--icon-size); fill: none; stroke: currentColor; stroke-width: var(--icon-stroke); }
+.icon-button { display: inline-grid; place-items: center; min-inline-size: var(--tap-target); min-block-size: var(--tap-target); }
+
+/* Reserve image geometry with HTML width/height or a component aspect-ratio.
+ * Opt-in entrance animation keeps content visible without JavaScript.
+ */
+.reveal { animation: foundation-reveal var(--motion-slow) var(--motion-ease) both; }
+@keyframes foundation-reveal {
+  from { opacity: 0; transform: translateY(var(--motion-distance)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-fast: 0ms; --motion-base: 0ms; --motion-slow: 0ms; --motion-distance: 0; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
