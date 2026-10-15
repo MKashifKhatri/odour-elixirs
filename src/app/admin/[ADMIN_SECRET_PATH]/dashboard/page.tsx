@@ -139,8 +139,8 @@ const Dashboard = () => {
                   data_2={data?.revenueSeries.orders || []}
                   title_1="Revenue"
                   title_2="Orders"
-                  bgColor_1="#211bd1"
-                  bgColor_2="rgba(33, 27, 209, 0.16)"
+                  bgColor_1="#111111"
+                  bgColor_2="rgba(17, 17, 17, 0.16)"
                   labels={data?.revenueSeries.labels || []}
                 />
               )}

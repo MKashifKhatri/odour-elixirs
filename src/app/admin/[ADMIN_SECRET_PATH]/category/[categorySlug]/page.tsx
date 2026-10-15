@@ -94,7 +94,7 @@ const CategoryManagement = ({ params }: { params: { categorySlug: string } }) =>
 
   return (
     <div className="w-full px-2 py-4 sm:px-4 md:px-8">
-      <main className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl">
         <section className="relative rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
           <button
             className="absolute -top-2 -right-2 rounded-full bg-red-500 p-2 text-white shadow-lg transition-colors hover:bg-red-600"
@@ -180,7 +180,7 @@ const CategoryManagement = ({ params }: { params: { categorySlug: string } }) =>
             </button>
           </form>
         </section>
-      </main>
+      </div>
     </div>
   );
 };

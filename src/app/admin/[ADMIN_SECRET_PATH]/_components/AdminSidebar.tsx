@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { SITE_NAME } from "@/lib/constants";
@@ -52,9 +53,10 @@ export default function AdminSidebar({ collapsed }: { collapsed: boolean }) {
     </button>
     {mobileOpen && <button type="button" aria-label="Close admin navigation" onClick={() => setMobileOpen(false)} className="fixed inset-0 z-30 bg-black/60 xl:hidden" />}
     <aside className={`admin-sidebar fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-[#e6e3dc] bg-[#fffefa] text-[#211e19] transition-[width,transform] duration-200 ${collapsed ? "xl:w-20" : "xl:w-72"} ${mobileOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}`}>
-      <div className={`flex h-16 shrink-0 items-center border-b border-[#e6e3dc] ${collapsed ? "justify-center px-2" : "justify-between px-5"}`}>
-        <Link href={`/admin/${ADMIN_SECRET_PATH}/dashboard`} aria-label={`${SITE_NAME} admin home`} className="font-display text-lg font-bold tracking-[-0.05em] text-[#211e19]">
-          {collapsed ? "E" : SITE_NAME}<span className="ml-2 align-middle text-[9px] font-semibold uppercase tracking-[0.18em] text-[#6e6e73]">Admin</span>
+      <div className={`admin-sidebar-brand flex h-16 shrink-0 items-center border-b border-[#e6e3dc] ${collapsed ? "justify-center px-2" : "justify-between px-5"}`}>
+        <Link href={`/admin/${ADMIN_SECRET_PATH}/dashboard`} aria-label={`${SITE_NAME} admin home`} className="inline-flex min-w-0 items-center gap-3">
+          <Image src="/brand/oe-black.svg" alt="" width={128} height={60} priority className={`h-auto shrink-0 ${collapsed ? "w-10" : "w-28"}`} />
+          {!collapsed && <span className="admin-sidebar-badge">Admin</span>}
         </Link>
         <button type="button" onClick={() => setMobileOpen(false)} aria-label="Close admin navigation" className="rounded-lg p-2 text-[#71695e] hover:bg-[#efeee8] hover:text-[#211e19] xl:hidden"><X className="h-4 w-4" /></button>
       </div>

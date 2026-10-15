@@ -31,7 +31,7 @@
   color-scheme: light;
 
   /* Typography: only regular, medium, and semibold. */
-  --font-family: -apple-system, "SF Pro Display", "Inter", system-ui, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
@@ -73,7 +73,7 @@
   --form-max: 25rem;
   --grid-columns: 12;
   --radius-card: 0;
-  --radius-button: 0;
+  --radius-button: 999px;
   --radius-input: 0;
   --shadow-card: none;
   --shadow-overlay: none;

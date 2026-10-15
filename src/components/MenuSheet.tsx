@@ -8,6 +8,7 @@ import type { RootState } from "@/store/store";
 import { userNotExist } from "@/store/reducer/userReducer";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { BrandIcon, MenuIcon } from "@/components/ui/brand-icons";
+import BrandLogo from "@/components/BrandLogo";
 import { storefrontLinks } from "@/lib/navigation";
 import { SITE_NAME } from "@/lib/constants";
 
@@ -45,14 +46,14 @@ export default function MenuSheet({ categories }: { categories: Category[] }) {
   return <Sheet open={open} onOpenChange={setOpen}>
     <SheetTrigger asChild><button type="button" className="brand-icon-button" aria-label="Open menu"><MenuIcon open={open} /></button></SheetTrigger>
     <SheetContent side="top" hideClose className="brand-menu-panel" aria-describedby={undefined} onOpenAutoFocus={(event) => { event.preventDefault(); closeRef.current?.focus(); }}>
-      <div className="brand-menu-top brand-container"><SheetTitle className="brand-menu-title">{SITE_NAME}</SheetTitle><SheetClose asChild><button ref={closeRef} type="button" className="brand-icon-button" aria-label="Close menu"><MenuIcon open /></button></SheetClose></div>
+      <div className="brand-menu-top brand-container"><SheetTitle className="brand-menu-title"><SheetClose asChild><Link href="/" aria-label={`${SITE_NAME} home`} className="brand-menu-brand"><BrandLogo priority /></Link></SheetClose></SheetTitle><SheetClose asChild><button ref={closeRef} type="button" className="brand-icon-button" aria-label="Close menu"><MenuIcon open /></button></SheetClose></div>
       <div className="brand-menu-body brand-container">
-        <nav aria-label="Mobile navigation"><ul className="brand-menu-links">{storefrontLinks.map((link) => <li key={link.label}><SheetClose asChild><Link href={link.href} aria-current={pathname === link.href ? "page" : undefined}>{link.label}</Link></SheetClose></li>)}</ul></nav>
+        <nav aria-label="Mobile navigation"><ul className="brand-menu-links">{storefrontLinks.map((link) => <li key={link.label}><SheetClose asChild><Link href={link.href} aria-current={pathname === link.href ? "page" : undefined}>{link.label}<BrandIcon name="chevron" /></Link></SheetClose></li>)}</ul></nav>
         {!!categories.length && <section className="brand-menu-families" aria-labelledby="menu-families"><h2 id="menu-families">Browse by scent family</h2><div>{categories.slice(0, 8).map((category) => <SheetClose asChild key={category.id}><Link href={`/category/${category.slug}`}>{category.name}</Link></SheetClose>)}</div></section>}
         <nav className="brand-menu-account" aria-label="Account and more">
           <SheetClose asChild><Link href={user ? "/profile" : "/login"}><BrandIcon name="user" />{user ? "Account details" : "Sign in to your account"}</Link></SheetClose>
-          <SheetClose asChild><Link href="/orders">My order requests</Link></SheetClose>
           <SheetClose asChild><Link href="/wishlist"><BrandIcon name="heart" />Wishlist</Link></SheetClose>
+          <SheetClose asChild><Link href="/orders"><BrandIcon name="bag" />My order requests</Link></SheetClose>
           <SheetClose asChild><Link href="/journal">The journal</Link></SheetClose>
           <SheetClose asChild><Link href="/contact">Contact</Link></SheetClose>
           {user && <button type="button" onClick={signOut} disabled={signingOut}>{signingOut ? "Signing out…" : "Sign out"}</button>}

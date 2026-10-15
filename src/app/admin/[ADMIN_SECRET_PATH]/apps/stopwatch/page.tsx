@@ -1,6 +1,5 @@
 // src/app/admin/[ADMIN_SECRET_PATH]/apps/stopwatch/page.tsx
 "use client"
-import AdminLayout from '../../_components/AdminLayout'; // Adjust the import path as necessary
 import { useState, useEffect } from 'react';
 
 const Stopwatch = () => {
@@ -27,7 +26,7 @@ const Stopwatch = () => {
 
   return (
       <div className="admin-container flex flex-col items-center justify-center h-full bg-gray-100 p-4 overflow-hidden">
-        <main className="dashboard-app-container p-6 bg-white rounded-lg shadow-md max-w-md w-full overflow-hidden">
+        <section className="dashboard-app-container p-6 bg-white rounded-lg shadow-md max-w-md w-full overflow-hidden">
           <h1 className="text-2xl font-bold mb-4 text-center">Stopwatch</h1>
           <section className="flex flex-col items-center">
             <div className="stopwatch text-center mb-4">
@@ -48,7 +47,7 @@ const Stopwatch = () => {
               </button>
             </div>
           </section>
-        </main>
+        </section>
       </div>
   );
 };

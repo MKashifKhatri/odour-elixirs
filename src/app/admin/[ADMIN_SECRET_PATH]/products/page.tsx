@@ -124,7 +124,7 @@ const Products = () => {
 
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Products</h1>
-        <p className="text-sm text-gray-500">Browse, manage, and edit catalog items from one place.</p>
+        <p className="text-sm text-gray-500">Manage live catalogue products here. Storefront preview samples are demo-only.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">

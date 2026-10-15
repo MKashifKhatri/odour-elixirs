@@ -50,7 +50,7 @@ const AddCategory = () => {
 
   return (
     <div className="w-full px-2 py-4 sm:px-4 md:px-8">
-      <main className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl">
         <section className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <Link
@@ -147,7 +147,7 @@ const AddCategory = () => {
             </button>
           </form>
         </section>
-      </main>
+      </div>
     </div>
   );
 };

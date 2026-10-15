@@ -35,8 +35,8 @@ const Barcharts = () => {
             data_1={[200, 444, 343, 556, 778, 455, 990]}
             title_1="Products"
             title_2="Users"
-            bgColor_1="#211bd1"
-            bgColor_2="rgba(33, 27, 209, 0.16)"
+            bgColor_1="#111111"
+            bgColor_2="rgba(17, 17, 17, 0.16)"
           />
         </div>
       </section>
@@ -55,7 +55,7 @@ const Barcharts = () => {
             data_2={[]}
             title_1="Orders"
             title_2=""
-            bgColor_1="#57947a"
+            bgColor_1="#6e6e73"
             bgColor_2=""
             labels={months}
           />

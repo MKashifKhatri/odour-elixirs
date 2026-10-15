@@ -68,7 +68,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[var(--store-bg)] px-4 py-10 text-[var(--store-ink)]">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--store-bg)] px-4 py-10 text-[var(--store-ink)]">
       <section aria-labelledby="admin-login-heading" className="w-full max-w-md rounded-2xl border border-[var(--store-line)] bg-[var(--store-surface)] p-6 shadow-[var(--store-shadow)] sm:p-9">
         <p className="eyebrow text-center">Odour Elixirs · Private workspace</p>
         <h1 id="admin-login-heading" className="mt-3 text-center font-display text-2xl font-semibold tracking-tight">Admin sign in</h1>
@@ -111,7 +111,7 @@ const AdminLogin = () => {
             </button>
           </form>
       </section>
-    </main>
+    </div>
   );
 };
 

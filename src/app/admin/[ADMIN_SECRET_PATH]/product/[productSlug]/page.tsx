@@ -215,7 +215,7 @@ const ProductManagement = ({ params }: { params: { productSlug: string } }) => {
 
   return (
     <div className="w-full px-2 py-4 sm:px-4 md:px-8">
-      <main className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2">
+      <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2">
         {/* Preview Section */}
         <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between">
@@ -457,7 +457,7 @@ const ProductManagement = ({ params }: { params: { productSlug: string } }) => {
             </button>
           </form>
         </section>
-      </main>
+      </div>
     </div>
   );
 };

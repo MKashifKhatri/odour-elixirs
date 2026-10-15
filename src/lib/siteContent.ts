@@ -52,7 +52,7 @@ export const defaultSiteContent: SiteContent = {
   announcement: "Complimentary fragrance guidance on WhatsApp",
   collectionEyebrow: "The collection",
   collectionTitle: "Find your signature.",
-  collectionDescription: "Three considered starting points. Follow the notes that feel like you.",
+  collectionDescription: "A considered collection. Follow the notes that feel like you.",
   storyEyebrow: "A scent, a feeling",
   storyTitle: "More than a final detail.",
   storyDescription: "The right fragrance becomes part of how you move through the world: personal, memorable and unmistakably yours. Tell us what you gravitate toward and we’ll help you find a scent that feels right.",

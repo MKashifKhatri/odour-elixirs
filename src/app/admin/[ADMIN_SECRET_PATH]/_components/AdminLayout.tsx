@@ -29,7 +29,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   const pathname = usePathname();
   const isLoginPage = pathname.includes("/login");
 
-  if (isLoginPage) return <div className="admin-login-shell">{children}</div>;
+  if (isLoginPage) return <main className="admin-login-shell">{children}</main>;
 
   return (
     <div className="admin-shell min-h-screen bg-[var(--store-bg)] text-[var(--store-ink)]">

@@ -12,7 +12,7 @@ type ProductVisualProps = {
   sizes?: string;
 };
 
-const isIllustrationPlaceholder = (src: string) => /(?:\/product-placeholder\.svg|\/brand\/bottle-[^/]+\.svg)$/i.test(src);
+const isIllustrationPlaceholder = (src: string) => /\/product-placeholder\.svg$/i.test(src);
 const canOptimizeImage = (src: string) => {
   try {
     const hostname = new URL(src).hostname;

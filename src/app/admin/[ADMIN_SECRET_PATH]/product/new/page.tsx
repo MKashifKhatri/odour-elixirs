@@ -193,7 +193,7 @@ const labelClass = "mb-1 block text-sm font-medium text-[var(--store-ink)]";
 // console.log(categoryId)
 return (
   <div className="w-full px-2 py-4 sm:px-4 md:px-8">
-    <main className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-4xl">
       <section className="rounded-2xl border border-[var(--store-line)] bg-white p-4 shadow-sm sm:p-6">
         <form onSubmit={submitHandler} className="space-y-6">
           <Link
@@ -390,7 +390,7 @@ return (
           {formError && <p role="alert" className="oe-variant-error">{formError}</p>}
         </form>
       </section>
-    </main>
+    </div>
   </div>
 );
 };
