@@ -262,7 +262,7 @@ export async function PUT(request: NextRequest) {
     if (warranty !== undefined) updates.warranty = warranty || null;
     if (variants !== undefined) {
       if (!Array.isArray(variants)) return Response.json(error(400, "Variants must be a list."), { status: 400 });
-      const normalizedVariants = normalizeProductVariants(variants, { cost_price: Number(product.cost_price) || 0, selling_price: Number(product.price) || 0, stock_quantity: Number(product.quantity) || 0 });
+      const normalizedVariants = normalizeProductVariants(variants, { cost_price: Number((product as { cost_price?: number }).cost_price) || 0, selling_price: Number(product.price) || 0, stock_quantity: Number(product.quantity) || 0 });
       const variantValidation = productVariantsSchema.safeParse(normalizedVariants);
       if (!variantValidation.success) {
         return Response.json(error(400, variantValidation.error.issues[0]?.message || "Please check the product variants."), { status: 400 });

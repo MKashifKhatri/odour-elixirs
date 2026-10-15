@@ -60,7 +60,7 @@ export default function SearchPage() {
   }, [query]);
 
   return (
-    <main className="oe-store-page oe-search-page">
+    <div className="oe-store-page oe-search-page">
       <div className="mb-6">
         <p className="eyebrow">Search</p>
         <h1 className="mt-1 text-2xl font-semibold text-[var(--store-ink)] sm:text-3xl">
@@ -105,6 +105,6 @@ export default function SearchPage() {
           <p className="mt-1 text-sm text-[var(--store-muted)]">Enter a product name above to see matching items.</p>
         </div>
       ) : null}
-    </main>
+    </div>
   );
 }

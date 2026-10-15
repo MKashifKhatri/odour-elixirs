@@ -3,7 +3,7 @@
 
 export default function PrivacyPolicy() {
     return (
-      <main className="oe-store-page oe-legal-page">
+      <div className="oe-store-page oe-legal-page">
         <div className="oe-legal-content">
           <p className="oe-micro-label oe-micro-label-dark"><span />LEGAL</p>
           <h1>Privacy policy</h1>
@@ -41,6 +41,6 @@ export default function PrivacyPolicy() {
             </p>
           </section>
         </div>
-      </main>
+      </div>
     );
   }

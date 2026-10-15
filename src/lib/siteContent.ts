@@ -96,11 +96,7 @@ export const defaultSiteContent: SiteContent = {
   showDiscovery: true,
   showCraft: false,
   showNewsletter: true,
-  houseStats: [
-    { value: "01", label: "Signature fragrances" },
-    { value: "02", label: "Crafted for presence" },
-    { value: "03", label: "Designed to linger" },
-  ],
+  houseStats: [],
   craftSteps: [
     { number: "01", title: "The oil", description: "A fragrance begins with a selection of notes that set its first impression." },
     { number: "02", title: "The blend", description: "Contrasting materials meet and find a character that feels distinctly its own." },

@@ -10,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ADMIN_SECRET_PATH } from "../_components/AdminSidebar";
 
+const getStock = (product: Product) => Number(product.quantity ?? product.available_quantity ?? product.stock ?? 0);
+
 export default function InventoryPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +28,7 @@ export default function InventoryPage() {
       setProducts(list);
       const initialStock: { [id: string]: number } = {};
       list.forEach((p: Product) => {
-        initialStock[p.id] = p.quantity;
+        initialStock[p.id] = Number(p.quantity ?? p.available_quantity ?? p.stock ?? 0);
       });
       setStockEdits(initialStock);
     } catch (err) {
@@ -51,7 +53,7 @@ export default function InventoryPage() {
 
   const handleSaveStock = async (product: Product) => {
     const newQty = stockEdits[product.id];
-    if (newQty === undefined || newQty === product.quantity) return;
+    if (newQty === undefined || newQty === getStock(product)) return;
 
     setSavingId(product.id);
     try {
@@ -79,15 +81,16 @@ export default function InventoryPage() {
 
       if (!matchesSearch) return false;
 
-      if (filter === "low") return p.quantity > 0 && p.quantity <= 5;
-      if (filter === "out") return p.quantity <= 0;
+      const stock = getStock(p);
+      if (filter === "low") return stock > 0 && stock <= 5;
+      if (filter === "out") return stock <= 0;
       return true;
     });
   }, [products, search, filter]);
 
-  const totalStock = products.reduce((sum, p) => sum + (p.quantity || 0), 0);
-  const outOfStockCount = products.filter((p) => p.quantity <= 0).length;
-  const lowStockCount = products.filter((p) => p.quantity > 0 && p.quantity <= 5).length;
+  const totalStock = products.reduce((sum, product) => sum + getStock(product), 0);
+  const outOfStockCount = products.filter((product) => getStock(product) <= 0).length;
+  const lowStockCount = products.filter((product) => getStock(product) > 0 && getStock(product) <= 5).length;
 
   return (
       <div className="p-4 sm:p-6 lg:p-8 space-y-6">
@@ -203,21 +206,21 @@ export default function InventoryPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filteredProducts.map((product) => {
-                  const currentStock = stockEdits[product.id] ?? product.quantity;
-                  const hasChanged = currentStock !== product.quantity;
+                  const currentStock = stockEdits[product.id] ?? getStock(product);
+                  const hasChanged = currentStock !== getStock(product);
 
                   let statusBadge = (
                     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 border border-emerald-200">
                       In Stock
                     </span>
                   );
-                  if (product.quantity <= 0) {
+                  if (currentStock <= 0) {
                     statusBadge = (
                       <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-medium text-rose-700 border border-rose-200">
                         Out of Stock
                       </span>
                     );
-                  } else if (product.quantity <= 5) {
+                  } else if (currentStock <= 5) {
                     statusBadge = (
                       <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700 border border-amber-200">
                         Low Stock

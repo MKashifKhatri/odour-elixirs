@@ -103,13 +103,14 @@ export default function ProfilePage() {
   };
 
   return (
-    <main className="oe-store-page oe-profile-page">
-      <header className="oe-account-heading" id="overview"><p className="oe-micro-label oe-micro-label-dark"><span />YOUR ACCOUNT</p><h1>Account</h1><p>Keep your details close for your next fragrance request.</p><button type="button" className="oe-account-signout" onClick={() => void handleSignOut()} disabled={signingOut}><LogOut aria-hidden="true" size={17} />{signingOut ? "Signing out" : "Sign out"}</button></header>
-      <nav className="oe-account-nav" aria-label="Account sections"><a href="#overview"><UserRound aria-hidden="true" />Overview<ChevronRight aria-hidden="true" /></a><Link href="/orders"><Package aria-hidden="true" />Orders<ChevronRight aria-hidden="true" /></Link><a href="#profile"><UserRound aria-hidden="true" />Profile<ChevronRight aria-hidden="true" /></a><a href="#addresses"><MapPin aria-hidden="true" />Addresses<ChevronRight aria-hidden="true" /></a><Link href="/wishlist"><Heart aria-hidden="true" />Wishlist<ChevronRight aria-hidden="true" /></Link></nav>
+    <div className="oe-store-page oe-profile-page">
+      <header className="oe-account-heading" id="overview"><p className="oe-micro-label oe-micro-label-dark"><span />YOUR ACCOUNT</p><h1>Your account.</h1><p>Keep your details close for your next fragrance request.</p><button type="button" className="oe-account-signout" onClick={() => void handleSignOut()} disabled={signingOut}><LogOut aria-hidden="true" size={17} />{signingOut ? "Signing out" : "Sign out"}</button></header>
+      <div className="house-account-layout"><nav className="oe-account-nav" aria-label="Account sections"><a href="#overview"><UserRound aria-hidden="true" />Overview<ChevronRight aria-hidden="true" /></a><Link href="/orders"><Package aria-hidden="true" />Orders<ChevronRight aria-hidden="true" /></Link><a href="#profile"><UserRound aria-hidden="true" />Profile<ChevronRight aria-hidden="true" /></a><a href="#addresses"><MapPin aria-hidden="true" />Addresses<ChevronRight aria-hidden="true" /></a><Link href="/wishlist"><Heart aria-hidden="true" />Wishlist<ChevronRight aria-hidden="true" /></Link></nav>
+      <div className="house-account-content">
       {/* Name Section */}
       <section className="oe-account-card" id="profile">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-lg font-semibold text-[var(--store-ink)]">Name</span>
+        <div className="oe-account-card-heading">
+          <span>Name</span>
           {!editing && (
             <Button size="sm" variant="outline" onClick={() => setEditing(true)}>
               Edit
@@ -118,7 +119,7 @@ export default function ProfilePage() {
         </div>
         {editing ? (
           <div className="flex flex-col sm:flex-row gap-2 items-center">
-            <Input value={name} onChange={e => setName(e.target.value)} className="flex-1" />
+            <Input aria-label="Full name" value={name} onChange={e => setName(e.target.value)} className="flex-1" />
             <div className="flex gap-2">
               <Button
                 onClick={handleSave}
@@ -142,22 +143,23 @@ export default function ProfilePage() {
       </section>
       {/* Email Section */}
       <section className="oe-account-card">
-        <span className="text-lg font-semibold text-[var(--store-ink)] mb-1">Email</span>
-        <div className="text-base text-[var(--store-muted)]">{user.email}</div>
+        <span className="oe-account-card-title">Email</span>
+        <div className="oe-account-card-value">{user.email}</div>
       </section>
       <section className="oe-account-card oe-account-orders" id="orders">
-        <span className="text-lg font-semibold text-[var(--store-ink)]">Orders</span>
-        <p className="text-sm text-[var(--store-muted)]">Track all your purchases and payment status.</p>
+        <span className="oe-account-card-title">Orders</span>
+        <p className="oe-account-card-description">Track every fragrance request and payment update in one place.</p>
         <Link href="/orders" className="w-fit">
           <Button size="sm" variant="outline">View My Orders</Button>
         </Link>
       </section>
       {/* Address Section */}
       <section className="oe-account-card" id="addresses">
-        <span className="text-lg font-semibold text-[var(--store-ink)] mb-1">Address</span>
+        <span className="oe-account-card-title">Address</span>
         <ProfileAddress userId={user.id} />
       </section>
-    </main>
+      </div></div>
+    </div>
   );
 }
 
@@ -260,11 +262,11 @@ function ProfileAddress({ userId }: { userId: string }) {
         </div>
       ) : (
         <form className="space-y-2" onSubmit={e => { e.preventDefault(); handleSave(); }}>
-          <Input name="address" placeholder="Address" value={form.address} onChange={handleChange} />
-          <Input name="city" placeholder="City" value={form.city} onChange={handleChange} />
-          <Input name="state" placeholder="State" value={form.state} onChange={handleChange} />
-          <Input name="country" placeholder="Country" value={form.country} onChange={handleChange} />
-          <Input name="zip_code" placeholder="Zip Code" value={form.zip_code} onChange={handleChange} />
+          <Input name="address" aria-label="Street address" placeholder="Address" value={form.address} onChange={handleChange} />
+          <Input name="city" aria-label="City" placeholder="City" value={form.city} onChange={handleChange} />
+          <Input name="state" aria-label="State" placeholder="State" value={form.state} onChange={handleChange} />
+          <Input name="country" aria-label="Country" placeholder="Country" value={form.country} onChange={handleChange} />
+          <Input name="zip_code" aria-label="Postal code" placeholder="Zip Code" value={form.zip_code} onChange={handleChange} />
           <div className="flex gap-2 mt-2">
             <Button type="submit" size="sm" variant="default">Save</Button>
             <Button type="button" size="sm" variant="outline" onClick={() => { setEditing(false); setForm(address ? {

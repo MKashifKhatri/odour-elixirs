@@ -128,22 +128,6 @@
 .ds-pagination-gap { padding-inline: var(--space-1); }
 .ds-chevron-back { transform: rotate(180deg); }
 
-.ds-product-card { position: relative; min-width: 0; }
-.ds-product-media { position: relative; display: block; aspect-ratio: var(--product-aspect); overflow: hidden; background: var(--surface-subtle); border-radius: var(--radius-card); }
-.ds-product-media > .oe-v2-visual,.ds-product-secondary,.ds-product-secondary > .oe-v2-visual { position: absolute; inset: 0; }
-.ds-product-media .oe-v2-visual-image { object-fit: contain; padding: var(--space-3); }
-.ds-product-secondary { opacity: 0; transition: opacity var(--motion-base) var(--motion-ease); }
-.ds-product-secondary:has(.is-placeholder) { display: none; }
-.ds-product-media:focus-visible .ds-product-secondary { opacity: 1; }
-@media (hover: hover) { .ds-product-media:hover .ds-product-secondary { opacity: 1; } }
-.ds-product-status { position: absolute; left: var(--space-2); bottom: var(--space-2); }
-.ds-product-card .ds-product-wishlist { position: absolute; top: var(--space-2); right: var(--space-2); width: var(--tap-target); height: var(--tap-target); background: var(--surface); color: var(--text); opacity: 1; transform: none; }
-.ds-product-copy { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); padding-block: var(--space-2); }
-.ds-product-card .ds-product-copy h3 { font-family: var(--font-family); font-size: var(--text-h3); font-weight: var(--weight-semibold); line-height: var(--leading-heading); letter-spacing: var(--tracking-heading); margin: 0; }
-.ds-product-copy p { font-size: var(--text-body); color: var(--text-secondary); margin: 0; }
-.ds-product-price { font-size: var(--text-price); font-weight: var(--weight-medium); }
-.ds-product-copy .ds-button { margin-top: var(--space-1); }
-
 /* Style guide is deliberately scoped away from storefront editorial styles. */
 .ds-guide { font: var(--weight-regular) var(--text-body)/var(--leading-body) var(--font-family); padding-block: var(--section-space); color: var(--text); }
 .ds-guide h1 { font-size: var(--text-h1); }

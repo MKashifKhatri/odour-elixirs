@@ -11,7 +11,7 @@
   --color-ink: #1d1d1f;
   --color-secondary: #6e6e73;
   --color-black: #000000;
-  --color-champagne: #b08d57;
+  --color-champagne: #383e39;
 
   /* Semantic colors: components should use these instead of palette values. */
   --surface: var(--color-white);
@@ -72,9 +72,9 @@
   --reading-max: 42.5rem;
   --form-max: 25rem;
   --grid-columns: 12;
-  --radius-card: 0.75rem;
-  --radius-button: 61.25rem;
-  --radius-input: 0.5rem;
+  --radius-card: 0;
+  --radius-button: 0;
+  --radius-input: 0;
   --shadow-card: none;
   --shadow-overlay: none;
   --tap-target: 2.75rem;
