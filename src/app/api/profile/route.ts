@@ -9,9 +9,12 @@ export async function PUT(request: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return Response.json(error(401, "Token Expired"), { status: 401 });
 
-    const { name } = await request.json();
-    if (!name || typeof name !== "string") {
-      return Response.json(error(400, "Invalid name"));
+    const body: unknown = await request.json();
+    const name = typeof body === "object" && body !== null && "name" in body && typeof body.name === "string"
+      ? body.name.trim()
+      : "";
+    if (!name || name.length > 100) {
+      return Response.json(error(400, "Enter a name between 1 and 100 characters"), { status: 400 });
     }
 
     const adminSupabase = createAdminClient();
@@ -27,10 +30,14 @@ export async function PUT(request: NextRequest) {
     }
 
     if (profile.name !== name) {
-      await adminSupabase
+      const { error: updateError } = await adminSupabase
         .from("profiles")
         .update({ name })
         .eq("id", user.id);
+      if (updateError) {
+        console.error("Profile name update failed:", updateError);
+        return Response.json(error(500, "Could not update your name"), { status: 500 });
+      }
     }
 
     return Response.json(

@@ -1,3 +1,4 @@
+import { randomInt } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import { error, success } from "@/helpers/apiResponseWrapper";
@@ -21,12 +22,26 @@ export async function POST(request: Request) {
     if (fetchError || !profile) {
       return Response.json(error(404, "User not found with this email"));
     }
+    if (profile.is_verified) {
+      return Response.json(error(409, "This account is already verified"));
+    }
 
-    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const verifyCode = randomInt(100000, 1000000).toString();
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 7);
 
-    // Send verification email
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({
+        verify_code: verifyCode,
+        verify_code_expiry: expiryDate.toISOString(),
+      })
+      .eq("id", id);
+    if (updateError) {
+      console.error("Error updating verification code:", updateError);
+      return Response.json(error(500, "Could not prepare a new verification code"));
+    }
+
     const emailResponse = await sendVerificationEmail({
       email: profile.email,
       id,
@@ -35,17 +50,8 @@ export async function POST(request: Request) {
     });
 
     if (!emailResponse.success) {
-      return Response.json(error(500, emailResponse.message));
+      return Response.json(error(502, emailResponse.message), { status: 502 });
     }
-
-    // Update verify code in profile
-    await supabase
-      .from("profiles")
-      .update({
-        verify_code: verifyCode,
-        verify_code_expiry: expiryDate.toISOString(),
-      })
-      .eq("id", id);
 
     return Response.json(
       success(201, {

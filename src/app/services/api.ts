@@ -173,6 +173,26 @@ export const verifyCode = async (data: { id: string; code: string }): Promise<an
   }
 };
 
+export const resendVerificationCode = async (id: string): Promise<any> => {
+  const response = await axiosClient.post("/resendVerificationCode", { id });
+  return response.data;
+};
+
+export const requestPasswordReset = async (email: string): Promise<any> => {
+  const response = await axiosClient.post("/forgotPassword", { email }, { suppressErrorToast: true });
+  return response.data;
+};
+
+export const resetPassword = async (data: { token: string; password: string }): Promise<any> => {
+  const response = await axiosClient.post("/resetPassword", data, { suppressErrorToast: true });
+  return response.data;
+};
+
+export const changePassword = async (data: { currentPassword: string; newPassword: string }): Promise<any> => {
+  const response = await axiosClient.post("/changePassword", data);
+  return response.data;
+};
+
 export const fetchUser = async (): Promise<{
   statusCode: number;
   result: { user: AuthUser } | null;

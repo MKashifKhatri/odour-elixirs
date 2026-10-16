@@ -117,13 +117,18 @@ export async function DELETE(request: NextRequest) {
       .from("addresses")
       .select("*")
       .eq("id", id)
+      .eq("user_id", user.id)
       .single();
 
     if (fetchError || !address) {
       return Response.json(error(404, "Address Not Found"));
     }
 
-    await adminSupabase.from("addresses").delete().eq("id", id);
+    const { error: deleteError } = await adminSupabase.from("addresses").delete().eq("id", id).eq("user_id", user.id);
+    if (deleteError) {
+      console.error("Address delete error:", deleteError);
+      return Response.json(error(500, "Could not delete address"), { status: 500 });
+    }
 
     return Response.json(
       success(200, { address, message: "Address Deleted Successfully" })
@@ -142,7 +147,8 @@ export async function PUT(request: NextRequest) {
     if (!user) return Response.json(error(401, "Token Expired"), { status: 401 });
 
     const data = await request.json();
-    const id = data.id;
+    const id = typeof data.id === "string" ? data.id : "";
+    if (!id) return Response.json(error(400, "Address ID is required"), { status: 400 });
 
     const adminSupabase = createAdminClient();
 
@@ -159,6 +165,7 @@ export async function PUT(request: NextRequest) {
       .from("addresses")
       .update(updates as any)
       .eq("id", id)
+      .eq("user_id", user.id)
       .select()
       .single();
 

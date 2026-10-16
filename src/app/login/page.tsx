@@ -27,6 +27,7 @@ const Login = () => {
 
   const requestedRedirect = searchParams.get("redirect") || "/";
   const redirectPath = requestedRedirect.startsWith("/") && !requestedRedirect.startsWith("//") ? requestedRedirect : "/";
+  const passwordResetComplete = searchParams.get("passwordReset") === "success";
 
   useEffect(() => {
     if (user && !loading) {
@@ -99,6 +100,7 @@ const Login = () => {
           <p className="oe-micro-label oe-micro-label-dark"><span />WELCOME BACK</p>
           <h2>Sign in</h2>
           <p className="oe-auth-subtitle">Use your email and password to continue.</p>
+          {passwordResetComplete && <div role="status" className="oe-auth-success">Your password has been updated. Sign in with your new password.</div>}
 
           <button type="button" onClick={handleGoogleSignIn} disabled={googleLoading} className="oe-auth-google"><span aria-hidden="true">G</span>{googleLoading ? "Connecting to Google…" : "Continue with Google"}</button>
           <div className="oe-auth-divider"><span />or continue with email<span /></div>
@@ -123,7 +125,10 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="password">Password</label>
+              <div className="oe-auth-field-heading">
+                <label htmlFor="password">Password</label>
+                <Link href="/forgot-password">Forgot password?</Link>
+              </div>
               <input
                 className="oe-auth-input"
                 type="password"
@@ -132,6 +137,7 @@ const Login = () => {
                 required
                 onChange={(e) => setPassword(e.target.value)}
                 minLength={8}
+                autoComplete="current-password"
               />
             </div>
 

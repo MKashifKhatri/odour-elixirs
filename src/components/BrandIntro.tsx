@@ -13,8 +13,8 @@ export default function BrandIntro({ isInitialHomePage }: { isInitialHomePage: b
 
     setVisible(true);
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const revealTimer = window.setTimeout(() => setRevealing(true), reducedMotion ? 100 : 2050);
-    const removeTimer = window.setTimeout(() => setVisible(false), reducedMotion ? 350 : 3500);
+    const revealTimer = window.setTimeout(() => setRevealing(true), reducedMotion ? 40 : 980);
+    const removeTimer = window.setTimeout(() => setVisible(false), reducedMotion ? 120 : 1580);
 
     return () => {
       window.clearTimeout(revealTimer);
@@ -27,7 +27,7 @@ export default function BrandIntro({ isInitialHomePage }: { isInitialHomePage: b
   return (
     <div className={`oe-brand-intro${revealing ? " is-revealing" : ""}`} role="status" aria-label={`Welcome to ${SITE_NAME}`}>
       <div className="oe-brand-intro-curtain" />
-      <span className="oe-brand-intro-logo" role="img" aria-label={SITE_NAME} />
+      <span className="oe-brand-intro-logo" role="img" aria-label={SITE_NAME}><span className="oe-brand-intro-logo-fill" aria-hidden="true" /></span>
     </div>
   );
 }

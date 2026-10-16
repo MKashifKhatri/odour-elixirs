@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { verifyCode } from "@/app/services/api";
+import { resendVerificationCode, verifyCode } from "@/app/services/api";
 import { ArrowRight } from "lucide-react";
 import ProductVisual from "@/components/ProductVisual";
 
 const VerifyCode = ({ params }: { params: { id: string } }) => {
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
+    const [isResending, setIsResending] = useState(false);
     const router = useRouter();
     const { toast } = useToast();
 
@@ -27,6 +28,20 @@ const VerifyCode = ({ params }: { params: { id: string } }) => {
         } catch (error: any) {
             console.error("Failed to verify code:", error);
             setError(error.message || "Failed to verify code. Please try again.");
+        }
+    };
+
+    const handleResend = async () => {
+        if (isResending) return;
+        setError("");
+        setIsResending(true);
+        try {
+            await resendVerificationCode(params.id);
+            toast({ title: "A new verification code has been sent." });
+        } catch (resendError) {
+            setError(typeof resendError === "string" ? resendError : "Could not send a new code. Please try again.");
+        } finally {
+            setIsResending(false);
         }
     };
 
@@ -56,6 +71,10 @@ const VerifyCode = ({ params }: { params: { id: string } }) => {
                             id="code"
                             name="code"
                             onChange={(e) => setCode(e.target.value)}
+                            inputMode="numeric"
+                            autoComplete="one-time-code"
+                            maxLength={6}
+                            pattern="[0-9]{6}"
                             required
                         />
                     </div>
@@ -68,6 +87,12 @@ const VerifyCode = ({ params }: { params: { id: string } }) => {
                         <ArrowRight className="h-4 w-4" />
                     </button>
                 </form>
+                <p className="oe-auth-footnote">
+                    Didn’t receive a code?{" "}
+                    <button type="button" className="oe-auth-text-button" onClick={() => void handleResend()} disabled={isResending}>
+                        {isResending ? "Sending…" : "Send a new code"}
+                    </button>
+                </p>
             </div>
         </section>
     );

@@ -9,9 +9,9 @@ import { Input } from "@/components/ui/input";
 import { updateUserName as updateUserNameAction, userExist } from "@/store/reducer/userReducer";
 import { updateUserName as updateUserNameApi, fetchUser } from "@/app/services/api";
 import Link from "next/link";
-import { ChevronRight, Heart, LogOut, MapPin, Package, UserRound } from "lucide-react";
+import { ChevronRight, Heart, KeyRound, LogOut, MapPin, Package, UserRound } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import { saveUserAddress, fetchAddress } from "@/app/services/api";
+import { saveUserAddress, fetchAddress, changePassword } from "@/app/services/api";
 import SessionExpiredNotice from "@/components/SessionExpiredNotice";
 import { isAuthError } from "@/utils/authError";
 import { userNotExist } from "@/store/reducer/userReducer";
@@ -104,8 +104,8 @@ export default function ProfilePage() {
 
   return (
     <div className="oe-store-page oe-profile-page">
-      <header className="oe-account-heading" id="overview"><p className="oe-micro-label oe-micro-label-dark"><span />YOUR ACCOUNT</p><h1>Your account.</h1><p>Keep your details close for your next fragrance request.</p><button type="button" className="oe-account-signout" onClick={() => void handleSignOut()} disabled={signingOut}><LogOut aria-hidden="true" size={17} />{signingOut ? "Signing out" : "Sign out"}</button></header>
-      <div className="house-account-layout"><nav className="oe-account-nav" aria-label="Account sections"><a href="#overview"><UserRound aria-hidden="true" />Overview<ChevronRight aria-hidden="true" /></a><Link href="/orders"><Package aria-hidden="true" />Orders<ChevronRight aria-hidden="true" /></Link><a href="#profile"><UserRound aria-hidden="true" />Profile<ChevronRight aria-hidden="true" /></a><a href="#addresses"><MapPin aria-hidden="true" />Addresses<ChevronRight aria-hidden="true" /></a><Link href="/wishlist"><Heart aria-hidden="true" />Wishlist<ChevronRight aria-hidden="true" /></Link></nav>
+      <header className="oe-account-heading" id="overview"><p className="oe-micro-label oe-micro-label-dark"><span />ACCOUNT</p><h1>Your account.</h1><button type="button" className="oe-account-signout" onClick={() => void handleSignOut()} disabled={signingOut}><LogOut aria-hidden="true" size={17} />{signingOut ? "Signing out" : "Sign out"}</button></header>
+      <div className="house-account-layout"><nav className="oe-account-nav" aria-label="Account sections"><a href="#overview"><UserRound aria-hidden="true" />Overview<ChevronRight aria-hidden="true" /></a><Link href="/orders"><Package aria-hidden="true" />Orders<ChevronRight aria-hidden="true" /></Link><a href="#profile"><UserRound aria-hidden="true" />Profile<ChevronRight aria-hidden="true" /></a><a href="#addresses"><MapPin aria-hidden="true" />Addresses<ChevronRight aria-hidden="true" /></a><a href="#security"><KeyRound aria-hidden="true" />Password<ChevronRight aria-hidden="true" /></a><Link href="/wishlist"><Heart aria-hidden="true" />Wishlist<ChevronRight aria-hidden="true" /></Link></nav>
       <div className="house-account-content">
       {/* Name Section */}
       <section className="oe-account-card" id="profile">
@@ -158,8 +158,60 @@ export default function ProfilePage() {
         <span className="oe-account-card-title">Address</span>
         <ProfileAddress userId={user.id} />
       </section>
+      <PasswordSettings />
       </div></div>
     </div>
+  );
+}
+
+function PasswordSettings() {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (newPassword !== confirmPassword) {
+      setError("Your new passwords don’t match.");
+      return;
+    }
+    setError("");
+    setIsSaving(true);
+    try {
+      await changePassword({ currentPassword, newPassword });
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (changeError) {
+      setError(typeof changeError === "string" ? changeError : "Could not change your password. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <section className="oe-account-card" id="security">
+      <span className="oe-account-card-title">Password</span>
+      <p className="oe-account-card-description">Update the password for your account.</p>
+      {error && <div role="alert" className="oe-auth-error">{error}</div>}
+      <form onSubmit={handleSubmit} className="oe-auth-fields oe-account-password-form">
+        <div>
+          <label htmlFor="current-password">Current password</label>
+          <Input id="current-password" type="password" autoComplete="current-password" value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} required />
+        </div>
+        <div>
+          <label htmlFor="new-password">New password</label>
+          <Input id="new-password" type="password" autoComplete="new-password" minLength={8} value={newPassword} onChange={(event) => setNewPassword(event.target.value)} required />
+        </div>
+        <div>
+          <label htmlFor="confirm-password">Confirm new password</label>
+          <Input id="confirm-password" type="password" autoComplete="new-password" minLength={8} value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} required />
+        </div>
+        <Button type="submit" disabled={isSaving} className="oe-account-password-submit">{isSaving ? "Updating…" : "Update password"}</Button>
+      </form>
+    </section>
   );
 }
 

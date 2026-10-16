@@ -5,7 +5,9 @@ import { ArrowUpRight } from "lucide-react";
 import FeaturedScents from "@/components/FeaturedScents";
 import FragranceFamilies from "@/components/FragranceFamilies";
 import HomeFaq from "@/components/HomeFaq";
+import NewsletterForm from "@/components/NewsletterForm";
 import ProductVisual from "@/components/ProductVisual";
+import Reveal from "@/components/Reveal";
 
 import { createAdminClient } from "@/lib/supabase/server";
 import { defaultSiteContent, type SiteContent } from "@/lib/siteContent";
@@ -38,15 +40,16 @@ export default async function Home() {
       <div className="house-hero-copy"><p className="eyebrow">{content.heroEyebrow}</p><h1 id="home-title">{content.heroTitle}</h1><p>{content.heroDescription}</p><div className="house-hero-actions"><Link href="/products" className="house-button">{content.primaryCta}<ArrowUpRight size={18} /></Link><Link href="/about" className="house-link">{content.secondaryCta}<ArrowUpRight size={16} /></Link></div></div>
       <div className="house-hero-caption"><span>ODOUR ELIXIRS</span><span>Fragrance. A personal expression.</span></div>
     </section>
-    {content.showBrandPoints && content.brandPoints.length > 0 && <section className="house-values" aria-labelledby="house-values-title">
+    {content.showBrandPoints && content.brandPoints.length > 0 && <Reveal className="oe-home-reveal"><section className="house-values" aria-labelledby="house-values-title">
       <header><p className="eyebrow">{content.brandPointsEyebrow}</p><h2 id="house-values-title">{content.brandPointsTitle}</h2></header>
       <div>{content.brandPoints.map((point, index) => <article key={`${point.title}-${index}`}><span>{String(index + 1).padStart(2, "0")}</span><h3>{point.title}</h3><p>{point.description}</p></article>)}</div>
-    </section>}
+    </section></Reveal>}
     <FeaturedScents eyebrow={content.collectionEyebrow} title={content.collectionTitle} description={content.collectionDescription} />
-    {content.showDiscovery && <FragranceFamilies eyebrow={content.discoveryEyebrow} title={content.discoveryTitle} />}
-    {content.showStory && <section className="house-story"><div><p className="eyebrow">{content.storyEyebrow}</p><h2>{content.storyTitle}</h2><p>{content.storyDescription}</p><Link href="/about" className="house-link">{content.storyLinkLabel}<ArrowUpRight size={18} /></Link></div><figure><ProductVisual src={content.storyImage || content.heroImage} alt="A closer look at the house of Odour Elixirs" sizes="(max-width: 760px) 100vw, 45vw" /></figure></section>}
-    {content.showTestimonials && content.testimonials.length > 0 && <section className="house-quotes" aria-label={content.testimonialTitle}><header><p className="eyebrow">{content.testimonialEyebrow}</p><h2>{content.testimonialTitle}</h2></header><div>{content.testimonials.slice(0, 3).map((item, index) => <figure key={index}><blockquote>“{item.quote}”</blockquote><figcaption>{item.name}{item.location && ' / '+item.location}</figcaption></figure>)}</div></section>}
-    {content.showClosingCta && <section className="house-closing"><div><p className="eyebrow">{content.ctaEyebrow}</p><h2>{content.ctaTitle}</h2><p>{content.ctaDescription}</p></div><a href={whatsappUrl} className="house-button" target="_blank" rel="noreferrer">{content.ctaButtonLabel}<ArrowUpRight size={18} /></a></section>}
-    {content.showFaq && content.faq.length > 0 && <HomeFaq items={content.faq.slice(0, 4)} eyebrow={content.faqEyebrow} title={content.faqTitle} actionLabel={content.faqActionLabel} whatsappUrl={whatsappUrl} />}
+    {content.showDiscovery && <Reveal className="oe-home-reveal"><FragranceFamilies eyebrow={content.discoveryEyebrow} title={content.discoveryTitle} /></Reveal>}
+    {content.showStory && <Reveal className="oe-home-reveal"><section className="house-story"><div><p className="eyebrow">{content.storyEyebrow}</p><h2>{content.storyTitle}</h2><p>{content.storyDescription}</p><Link href="/about" className="house-link">{content.storyLinkLabel}<ArrowUpRight size={18} /></Link></div><figure><ProductVisual src={content.storyImage || content.heroImage} alt="A closer look at the house of Odour Elixirs" sizes="(max-width: 760px) 100vw, 45vw" /></figure></section></Reveal>}
+    {content.showTestimonials && content.testimonials.length > 0 && <Reveal className="oe-home-reveal"><section className="house-quotes" aria-label={content.testimonialTitle}><header><p className="eyebrow">{content.testimonialEyebrow}</p><h2>{content.testimonialTitle}</h2></header><div>{content.testimonials.slice(0, 3).map((item, index) => <figure key={index}><blockquote>“{item.quote}”</blockquote><figcaption>{item.name}{item.location && ' / '+item.location}</figcaption></figure>)}</div></section></Reveal>}
+    {content.showClosingCta && <Reveal className="oe-home-reveal"><section className="house-closing"><div><p className="eyebrow">{content.ctaEyebrow}</p><h2>{content.ctaTitle}</h2><p>{content.ctaDescription}</p></div><a href={whatsappUrl} className="house-button" target="_blank" rel="noreferrer">{content.ctaButtonLabel}<ArrowUpRight size={18} /></a></section></Reveal>}
+    {content.showFaq && content.faq.length > 0 && <Reveal className="oe-home-reveal"><HomeFaq items={content.faq.slice(0, 4)} eyebrow={content.faqEyebrow} title={content.faqTitle} actionLabel={content.faqActionLabel} whatsappUrl={whatsappUrl} /></Reveal>}
+    {content.showNewsletter && <Reveal className="oe-home-reveal"><NewsletterForm eyebrow={content.newsletterEyebrow} title={content.newsletterTitle} buttonLabel={content.newsletterButtonLabel} /></Reveal>}
   </div>;
 }
